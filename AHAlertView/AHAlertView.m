@@ -41,7 +41,7 @@ static const NSInteger AHViewAutoresizingFlexibleSizeAndMargins =
 // important enough to expose via UIAppearance selectors. If you disagree with that
 // assessment, you can either tweak them here as your application requires, or you
 // can submit an issue or pull request to make layout behavior more flexible.
-static const CGFloat AHAlertViewDefaultWidth = 276;
+static const CGFloat AHAlertViewDefaultWidth = 300;
 static const CGFloat AHAlertViewMinimumHeight = 100;
 static const CGFloat AHAlertViewDefaultButtonHeight = 40;
 static const CGFloat AHAlertViewDefaultTextFieldHeight = 26;
