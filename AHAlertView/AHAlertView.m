@@ -202,8 +202,8 @@ fromTextAttributes:(NSDictionary *)attributes
 		[super setBackgroundColor:[UIColor clearColor]];
 
 		// Cache text properties for later use
-		_title = title;
-		_message = message;
+		_title = title ? title : @"";
+		_message = message ? message : @"";
 
 		// Set default presentation and dismissal animation styles
 		_presentationStyle = AHAlertViewPresentationStyleDefault;
