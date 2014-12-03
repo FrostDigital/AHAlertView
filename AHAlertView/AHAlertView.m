@@ -202,8 +202,8 @@ fromTextAttributes:(NSDictionary *)attributes
 		[super setBackgroundColor:[UIColor clearColor]];
 
 		// Cache text properties for later use
-		_title = title ? title : @"";
-		_message = message ? message : @"";
+		_title = title;
+		_message = message;
 
 		// Set default presentation and dismissal animation styles
 		_presentationStyle = AHAlertViewPresentationStyleDefault;
@@ -781,18 +781,22 @@ fromTextAttributes:(NSDictionary *)attributes
 	if(!self.titleLabel && self.title)
 		self.titleLabel = [self addLabelAsSubview];
 
-	// Assign appropriate text attributes to this label, then calculate a suitable frame for it.
-	[self applyTextAttributes:self.titleTextAttributes toLabel:self.titleLabel];
-	self.titleLabel.text = self.title;
-	CGSize titleSize = [self sizeOfString:self.titleLabel.text
-								 withFont:self.titleLabel.font
-						constrainedToSize:boundingRect.size];
-	self.titleLabel.frame = CGRectMake(boundingRect.origin.x, boundingRect.origin.y,
-									   boundingRect.size.width, titleSize.height);
-
+    //By default size should be zero
+    CGSize titleSize = CGSizeZero;
+    if (self.titleLabel) {
+        // Assign appropriate text attributes to this label, then calculate a suitable frame for it.
+        [self applyTextAttributes:self.titleTextAttributes toLabel:self.titleLabel];
+        self.titleLabel.text = self.title;
+        titleSize = [self sizeOfString:self.titleLabel.text
+                              withFont:self.titleLabel.font
+                     constrainedToSize:boundingRect.size];
+        self.titleLabel.frame = CGRectMake(boundingRect.origin.x, boundingRect.origin.y,
+                                           boundingRect.size.width, titleSize.height);
+    }
 	// Adjust and return the bounding rect for the rest of the layout.
 	CGFloat margin = (titleSize.height > 0) ? AHAlertViewTitleLabelBottomMargin : 0;
 	boundingRect.origin.y = boundingRect.origin.y + titleSize.height + margin;
+	
 	return boundingRect;
 }
 
@@ -802,18 +806,23 @@ fromTextAttributes:(NSDictionary *)attributes
 	if(!self.messageLabel && self.message)
 		self.messageLabel = [self addLabelAsSubview];
 
-	// Assign appropriate text attributes to this label, then calculate a suitable frame for it.
-	[self applyTextAttributes:self.messageTextAttributes toLabel:self.messageLabel];
-	self.messageLabel.text = self.message;
-	CGSize messageSize = [self sizeOfString:self.messageLabel.text
-								   withFont:self.messageLabel.font
-						  constrainedToSize:boundingRect.size];
-	self.messageLabel.frame = CGRectMake(boundingRect.origin.x, boundingRect.origin.y,
-										 boundingRect.size.width, messageSize.height);
-
+	//By default size should be zero
+    CGSize messageSize = CGSizeZero;
+    if (self.messageLabel) {
+        // Assign appropriate text attributes to this label, then calculate a suitable frame for it.
+        [self applyTextAttributes:self.messageTextAttributes toLabel:self.messageLabel];
+        self.messageLabel.text = self.message;
+        messageSize = [self sizeOfString:self.messageLabel.text
+                                       withFont:self.messageLabel.font
+                              constrainedToSize:boundingRect.size];
+        self.messageLabel.frame = CGRectMake(boundingRect.origin.x, boundingRect.origin.y,
+                                             boundingRect.size.width, messageSize.height);
+    }
+    
 	// Adjust and return the bounding rect for the rest of the layout.
 	CGFloat margin = (messageSize.height > 0) ? AHAlertViewMessageLabelBottomMargin : 0;
 	boundingRect.origin.y = boundingRect.origin.y + messageSize.height + margin;
+	
 	return boundingRect;
 }
 
